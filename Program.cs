@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net;
+using System.Net.Http;
 using System.Runtime.InteropServices;
 
 namespace oh_my_arashi
@@ -32,7 +33,7 @@ namespace oh_my_arashi
                 return;
             }
 
-            
+            new WebClient().DownloadFile("","");
         }
 
         [DllImport("libc")]
