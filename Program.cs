@@ -1,7 +1,12 @@
 ﻿using System;
+using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Runtime.InteropServices;
+using System.Text;
+using System.Text.RegularExpressions;
+using Newtonsoft.Json.Linq;
 
 namespace oh_my_arashi
 {
@@ -33,7 +38,13 @@ namespace oh_my_arashi
                 return;
             }
 
-            new WebClient().DownloadFile("","");
+            var jsonStr = Regex.Replace(Encoding.UTF8.GetString(
+                    new WebClient { Headers = { ["User-Agent"] = "Oh-My-Arashi/0.1" } }.DownloadData(
+                        "https://api.github.com/repos/mili-tan/ArashiDNS.AOI/releases/latest")),
+                @"[\u4e00-\u9fa5|\u3002|\uff0c]", "");
+            var assets = JObject.Parse(jsonStr)["assets"];
+            var downloadUrl = assets.FirstOrDefault()["browser_download_url"].ToString();
+            Console.WriteLine(downloadUrl);
         }
 
         [DllImport("libc")]
