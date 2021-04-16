@@ -48,10 +48,13 @@ namespace oh_my_arashi
 
             Console.WriteLine(downloadUrl);
             new WebClient().DownloadFile(downloadUrl, "Arashi.Aoi");
+            chmod("Arashi.Aoi", 755);
             Console.WriteLine("Done!");
         }
 
         [DllImport("libc")]
         public static extern uint getuid();
+        [DllImport("libc", SetLastError = true)]
+        public static extern int chmod(string path, int mode);
     }
 }
