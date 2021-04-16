@@ -1,8 +1,5 @@
 ﻿using System;
-using System.IO;
-using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -43,8 +40,15 @@ namespace oh_my_arashi
                         "https://api.github.com/repos/mili-tan/ArashiDNS.AOI/releases/latest")),
                 @"[\u4e00-\u9fa5|\u3002|\uff0c]", "");
             var assets = JObject.Parse(jsonStr)["assets"];
-            var downloadUrl = assets.FirstOrDefault()["browser_download_url"].ToString();
+            var downloadUrl = string.Empty;
+            
+            foreach (var asset in assets)
+                if (asset["name"].ToString() == "Arashi.Aoi.linux-x64")
+                    downloadUrl = asset["browser_download_url"].ToString();
+
             Console.WriteLine(downloadUrl);
+            new WebClient().DownloadFile(downloadUrl, "Arashi.Aoi");
+            Console.WriteLine("Done!");
         }
 
         [DllImport("libc")]
