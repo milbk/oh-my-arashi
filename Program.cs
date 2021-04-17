@@ -4,6 +4,7 @@ using System.Net;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
+using CliWrap;
 using Newtonsoft.Json.Linq;
 
 namespace oh_my_arashi
@@ -51,7 +52,8 @@ namespace oh_my_arashi
             new WebClient().DownloadFile(downloadUrl, "arashi-aoi");
             chmod("arashi-aoi", 775);
             Console.WriteLine("Done!");
-            File.Copy("arashi-aoi", "/usr/bin/arashi-aoi", true);
+            Cli.Wrap("/bin/bash").WithArguments(new[] {"-c", "cp ./arashi-aoi /usr/bin/arashi-aoi"}).ExecuteAsync()
+                .GetAwaiter().GetResult();
         }
 
         [DllImport("libc")]
