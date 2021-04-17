@@ -47,8 +47,8 @@ namespace oh_my_arashi
                     downloadUrl = asset["browser_download_url"].ToString();
 
             Console.WriteLine(downloadUrl);
-            new WebClient().DownloadFile(downloadUrl, "Arashi.Aoi");
-            chmod("Arashi.Aoi", 755);
+            new WebClient().DownloadFile(downloadUrl, "arashi-aoi");
+            chmod("arashi-aoi", 775);
             Console.WriteLine("Done!");
         }
 
